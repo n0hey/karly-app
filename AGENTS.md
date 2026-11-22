@@ -20,7 +20,8 @@ Références : Uber et Bolt pour la simplicité du parcours, GoMore pour la loca
 - **Modèle** : voitures proposées par des particuliers et par des professionnels. Certaines réservations sont instantanées, d'autres passent par une demande au propriétaire : l'interface doit toujours dire laquelle.
 - **Marque** : mascotte, une petite voiture jaune à visage sur fond bleu nuit (`#FFCB3D` sur `#1B2440`). Deux versions retenues, le choix final entre les deux reste à faire : de face (`assets/logo/karly-de-face.svg`) et de profil (`assets/logo/karly-qui-roule.svg`). Mot-logo « karly » en minuscules arrondies.
 - **Style** : très clair, très premium.
-- **Design system** : la base « Soleil » sur fond blanc. Boutons jaunes en pilule (le jaune est réservé à l'action), formes rondes, ombres douces, mascotte toujours posée sur sa tuile bleu nuit. Prototype en cours d'affinage dans `docs/design-system/prototype.html` ; les ébauches écartées restent dans `ebauches.html`.
+- **Design system** : la base « Soleil » sur fond blanc. Boutons jaunes en pilule (le jaune est réservé à l'action), formes rondes, bleu ciel en fond des visuels de voitures. Trois versions nommées dans `docs/design-system/versions.html` : **Équilibre**, **Velours** (plus premium), **Pop** (plus ludique). Le choix entre les trois reste à faire. Les étapes précédentes restent dans `prototype.html` et `ebauches.html`.
+- **Mascotte dans l'app** : posée telle quelle sur le blanc, jamais sur la tuile de couleur du logo. Elle sera animée et n'apparaît qu'à des moments prévus : au repos (accueil, profil), endormie (aucune location en cours), réveil (une réservation arrive), appel de phares (rappel), en route (chargement). Pas de mascotte animée pendant le paiement, une saisie ou une erreur. Les animations s'arrêtent si l'utilisateur a demandé moins de mouvement.
 
 Le contexte produit détaillé est dans [PRODUCT.md](PRODUCT.md).
 
@@ -28,6 +29,8 @@ Le contexte produit détaillé est dans [PRODUCT.md](PRODUCT.md).
 
 Ne pas trancher ces points à la place de l'utilisateur. Poser la question si une tâche en dépend.
 
+- **Version du design system** : Équilibre, Velours ou Pop.
+- **Fond du logo** : sur le bleu nuit actuel, les roues ne se voient pas. Cinq pistes dans `docs/design-system/versions.html` (Nuit, Nuit pneus clairs, Indigo, Azur, Ciel).
 - **Remise des clés** : en main propre, boîte à clés, ou ouverture par le téléphone (demande du matériel dans les voitures). L'interface doit pouvoir accueillir les trois.
 - **Marché** : la Suisse est supposée (francs suisses, TWINT), à confirmer.
 - **Tutoiement ou vouvoiement** dans les textes de l'app.
@@ -68,7 +71,7 @@ Elles viennent des reproches les plus fréquents faits aux apps du marché. Elle
 4. Une erreur conserve ce que l'utilisateur a saisi, dit ce qui s'est passé en une phrase et propose une issue. Jamais de message technique brut.
 5. Les fonctions critiques marchent sans réseau : photos d'état des lieux, consultation de la réservation en cours.
 6. Les filtres et la saisie survivent à un retour en arrière et à une mise en veille.
-7. Aucune couleur, taille de texte ou espacement écrit en dur : tout passe par les jetons du design system (définis dans `docs/design-system/prototype.html`, encore en cours d'affinage).
+7. Aucune couleur, taille de texte ou espacement écrit en dur : tout passe par les jetons du design system (définis dans `docs/design-system/versions.html`, encore en cours d'affinage).
 
 ## Textes de l'app
 
