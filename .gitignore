@@ -4,3 +4,6 @@ xcuserdata/
 DerivedData/
 build/
 .env
+
+# Cache local du plugin impeccable
+.impeccable/hook.cache.json

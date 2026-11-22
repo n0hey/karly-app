@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karly · prototype du design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700&family=Onest:wght@400;500;600;700&display=swap">
+<style>
+/* ---------- jetons ---------- */
+:root{
+  --color-bg:#FFFFFF; --color-surface:#FFFFFF; --color-sunken:#F4F5F7; --color-tint:#EAF4FF;
+  --color-text:#1B2440; --color-text-muted:#5B6375; --color-line:#E6E8EE;
+  --color-action:#FFCB3D; --color-action-hover:#F6BC1E; --color-on-action:#1B2440;
+  --color-navy:#1B2440; --color-on-navy:#FFFFFF; --color-yellow:#FFCB3D;
+  --color-ok:#17693F; --color-ok-bg:#E3F4EA; --color-warn:#7A5200; --color-warn-bg:#FFF1CC; --color-err:#A8241C; --color-err-bg:#FCE9E7;
+  --radius-card:24px; --radius-inner:16px; --radius-pill:999px; --radius-tile:30%;
+  --shadow-card:0 0 0 1px rgba(27,36,64,.06),0 10px 28px rgba(27,36,64,.07);
+  --font-display:"Gabarito",sans-serif; --font-body:"Onest",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.5 var(--font-body);background:#EFEFEC;color:var(--color-text);-webkit-font-smoothing:antialiased}
+::selection{background:var(--color-yellow);color:var(--color-navy)}
+:focus-visible{outline:2px solid var(--color-navy);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 60px}
+.intro{padding:40px 0 24px;max-width:70ch}
+.intro h1{font:700 32px/1.1 var(--font-display);letter-spacing:-.01em;margin-bottom:10px}
+.intro p{color:#5E626B}
+.sheet{background:var(--color-bg);border-radius:28px;border:1px solid #DDDDD8;padding:36px;margin-bottom:28px}
+.sheet>h2{font:700 24px/1.15 var(--font-display);margin-bottom:6px}
+.sheet>p{color:var(--color-text-muted);max-width:68ch;margin-bottom:24px}
+.sheet h3{font:600 15px/1.2 var(--font-body);margin:26px 0 12px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+
+/* ---------- planche ---------- */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}
+.sw i{display:block;height:56px;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(27,36,64,.10)}
+.sw b{display:block;font-weight:600;font-size:13px;margin-top:6px}
+.sw code{font:12px/1.2 ui-monospace,Menlo,monospace;color:var(--color-text-muted)}
+.type p{margin-bottom:8px}
+.type .t1{font:700 32px/1.1 var(--font-display);letter-spacing:-.01em}
+.type .t2{font:600 20px/1.25 var(--font-display)}
+.type .t3{max-width:50ch}
+.type .t4{font-size:13px;color:var(--color-text-muted)}
+.type .num{font:700 36px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.shapes{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;font-size:13px;color:var(--color-text-muted)}
+.shapes i{display:block;background:var(--color-surface);box-shadow:var(--shadow-card);margin-bottom:10px}
+.rules li{list-style:none;padding:8px 0;border-top:1px solid var(--color-line);max-width:72ch}
+.rules b{font-weight:600}
+
+/* ---------- composants ---------- */
+.k-btn{font:600 16px/1 var(--font-body);color:var(--color-on-action);background:var(--color-action);border:0;border-radius:var(--radius-pill);padding:0 24px;min-height:52px;cursor:pointer;transition:background .18s var(--ease),transform .18s var(--ease)}
+.k-btn:hover{background:var(--color-action-hover)}.k-btn:active{transform:scale(.98)}
+.k-btn.sec{background:transparent;color:var(--color-text);box-shadow:inset 0 0 0 1.5px var(--color-text)}
+.k-btn.sec:hover{background:var(--color-sunken)}
+.k-btn[disabled]{background:var(--color-sunken);color:var(--color-text-muted);cursor:not-allowed}
+.k-btn.block{width:100%}
+.k-field{display:block;width:100%;max-width:330px}
+.k-field span{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.k-field input{width:100%;font:16px/1 var(--font-body);color:var(--color-text);background:var(--color-surface);border:1.5px solid var(--color-line);border-radius:var(--radius-pill);padding:0 20px;min-height:52px}
+.k-field input:focus{outline:0;border-color:var(--color-navy)}
+.k-chip{font:500 14px/1 var(--font-body);color:var(--color-text);background:var(--color-surface);box-shadow:inset 0 0 0 1px var(--color-line);border-radius:var(--radius-pill);padding:0 14px;min-height:38px;display:inline-flex;align-items:center;white-space:nowrap}
+.k-chip.on{background:var(--color-navy);color:var(--color-on-navy);box-shadow:none}
+.k-badge{font:600 13px/1 var(--font-body);border-radius:var(--radius-pill);padding:0 11px 0 8px;min-height:28px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.k-badge svg{width:15px;height:15px;flex:none}
+.k-badge.ok{color:var(--color-ok);background:var(--color-ok-bg)}.k-badge.warn{color:var(--color-warn);background:var(--color-warn-bg)}.k-badge.err{color:var(--color-err);background:var(--color-err-bg)}
+.k-tile{flex:none;display:grid;place-items:center;background:var(--color-navy);border-radius:var(--radius-tile);width:96px;height:96px}
+.k-tile svg{width:82%}
+.k-car{display:flex;gap:12px;align-items:center;background:var(--color-surface);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:12px;width:100%;max-width:420px}
+.k-car .pic{flex:none;width:68px;height:64px;border-radius:var(--radius-inner);background:var(--color-tint);display:grid;place-items:center}
+.k-car .pic svg{width:54px;height:38px}
+.k-car .mid{min-width:0;flex:1}
+.k-car h4{font:600 17px/1.2 var(--font-display);white-space:nowrap}.k-car p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;color:var(--color-text-muted);margin:1px 0 6px}
+.k-car .price{text-align:right;font:700 18px/1.1 var(--font-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.k-car .price small{display:block;font:400 12px/1.3 var(--font-body);color:var(--color-text-muted)}
+.k-empty{text-align:center;padding:8px 8px 0}
+.k-empty .k-tile{margin:0 auto 16px}
+.k-empty h4{font:700 20px/1.2 var(--font-display);margin-bottom:6px}
+.k-empty p{font-size:15px;color:var(--color-text-muted);margin-bottom:18px}
+.k-total{background:var(--color-surface);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:16px 16px 14px}
+.k-total h4{font:600 14px/1.25 var(--font-body);margin-bottom:6px}
+.k-total dl{font-variant-numeric:tabular-nums}
+.k-total dl div{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:6px 0;border-bottom:1px solid var(--color-line);color:var(--color-text-muted)}
+.k-total dd{color:var(--color-text);white-space:nowrap}
+.k-total .sum{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0 2px}
+.k-total .sum span{font-weight:600}
+.k-total .sum strong{font:700 30px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.k-total .note{font-size:13px;color:var(--color-text-muted);margin:5px 0 12px}
+.k-total .fine{font-size:12.5px;color:var(--color-text-muted);text-align:center;margin-top:9px}
+.k-search{background:var(--color-surface);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:4px 16px}
+.k-search div{padding:10px 0}.k-search div+div{border-top:1px solid var(--color-line)}
+.k-search small{display:block;font-size:12px;color:var(--color-text-muted)}.k-search b{font-weight:600;font-size:15px}
+.k-tabs{display:flex;background:var(--color-surface);box-shadow:0 -1px 0 var(--color-line);padding:8px 6px 14px}
+.k-tabs span{flex:1;display:grid;justify-items:center;gap:3px;font-size:11.5px;font-weight:500;color:var(--color-text-muted)}
+.k-tabs svg{width:24px;height:24px}
+.k-tabs i{display:grid;place-items:center;width:52px;height:30px;border-radius:var(--radius-pill)}
+.k-tabs .on{color:var(--color-text);font-weight:600}.k-tabs .on i{background:var(--color-yellow)}
+
+/* ---------- écrans ---------- */
+.screens{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.screens figure{width:320px;max-width:100%}
+.screens figcaption{font-size:14px;color:var(--color-text-muted);text-align:center;margin-top:12px}
+.phone{position:relative;height:720px;background:var(--color-bg);border-radius:40px;box-shadow:0 0 0 1px rgba(27,36,64,.10),0 24px 60px rgba(27,36,64,.14);overflow:hidden;display:flex;flex-direction:column}
+.phone .body{flex:1;overflow:hidden;padding:14px 16px 0}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;min-height:44px}
+.bar .back{width:44px;height:44px;border-radius:50%;border:0;box-shadow:inset 0 0 0 1px var(--color-line);background:var(--color-surface);color:var(--color-text);display:grid;place-items:center;cursor:pointer}
+.bar .back svg{width:20px;height:20px}
+.bar .logo{display:flex;align-items:center;gap:9px}
+.bar .logo .k-tile{width:38px;height:38px}.bar .logo>svg{height:22px;width:40px;color:var(--color-text)}
+.bar .me{margin-left:auto;width:40px;height:40px;border-radius:50%;background:var(--color-sunken);display:grid;place-items:center;font:600 14px/1 var(--font-body)}
+.bar h3{font:700 22px/1.1 var(--font-display);margin:0}
+.phone .title{font:700 26px/1.12 var(--font-display);letter-spacing:-.01em;margin:0}
+.phone .lead{font:700 22px/1.15 var(--font-display);margin:16px 0 10px}
+.phone .where{color:var(--color-text-muted);font-size:15px;margin:3px 0 10px}
+.phone .row{gap:7px;margin-bottom:12px}
+.phone .scroll{display:flex;gap:7px;margin:14px -16px 0;padding:0 16px;overflow:hidden}
+.phone .list{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:0 1px}
+.hero{background:var(--color-tint);border-radius:var(--radius-card);height:116px;display:grid;place-items:center;margin-bottom:12px}
+.hero svg{width:150px;height:104px}
+.center{flex:1;display:grid;align-content:center;padding-bottom:40px}
+
+@media (max-width:700px){.wrap{padding:0 14px 40px}.sheet{padding:22px 16px;border-radius:22px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="karly-face" viewBox="6 18 108 92"><ellipse cx="60" cy="102" rx="38" ry="4" fill="#1B2440" opacity="0.10"/><rect x="26" y="84" width="19" height="17" rx="6" fill="#080C1C"/><rect x="75" y="84" width="19" height="17" rx="6" fill="#080C1C"/><rect x="10" y="46" width="15" height="11" rx="5.5" fill="#F2B21F"/><rect x="95" y="46" width="15" height="11" rx="5.5" fill="#F2B21F"/><path d="M32 58L38 33Q40 24 50 24H70Q80 24 82 33L88 58Z" fill="#FFCB3D"/><path d="M40 55L45 36Q46 31 51 31H69Q74 31 75 36L80 55Z" fill="#CFEAFF"/><path d="M51 37L48 48" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"/><rect x="17" y="50" width="86" height="42" rx="17" fill="#FFCB3D"/><ellipse cx="25.5" cy="80" rx="4.5" ry="3" fill="#FF8A66"/><ellipse cx="94.5" cy="80" rx="4.5" ry="3" fill="#FF8A66"/><circle cx="39" cy="68" r="11" fill="#FFFFFF"/><circle cx="81" cy="68" r="11" fill="#FFFFFF"/><circle cx="41" cy="69" r="5.6" fill="#1B2440"/><circle cx="83" cy="69" r="5.6" fill="#1B2440"/><circle cx="43.2" cy="66.6" r="1.9" fill="#FFFFFF"/><circle cx="85.2" cy="66.6" r="1.9" fill="#FFFFFF"/><path d="M52 79Q60 87 68 79" fill="none" stroke="#1B2440" stroke-width="3.4" stroke-linecap="round"/></symbol>
+  <symbol id="karly-roule" viewBox="0 28 112 78"><ellipse cx="61" cy="98" rx="46" ry="4" fill="#1B2440" opacity="0.10"/><g fill="none" stroke="#1B2440" stroke-width="3" stroke-linecap="round" opacity="0.25"><path d="M5 60H10M3 70H9"/></g><path d="M15 80Q15 60 27 58L34 44Q38 34 49 34H66Q76 34 82 44L90 57Q105 59 107 72V80Q107 87 100 87H22Q15 87 15 80Z" fill="#FFCB3D"/><path d="M40 56L44 46Q46 41 51 41H57V56Z" fill="#CFEAFF"/><path d="M61 56V41H65Q70 41 73 46L79 56Z" fill="#CFEAFF"/><path d="M48 66H55" fill="none" stroke="#F2B21F" stroke-width="3" stroke-linecap="round"/><rect x="15" y="65" width="5" height="9" rx="2.5" fill="#FF5A45"/><circle cx="38" cy="87" r="11" fill="#080C1C"/><circle cx="38" cy="87" r="4.6" fill="#F2B21F"/><circle cx="85" cy="87" r="11" fill="#080C1C"/><circle cx="85" cy="87" r="4.6" fill="#F2B21F"/><ellipse cx="80" cy="74" rx="3.2" ry="2.2" fill="#FF8A66"/><circle cx="91" cy="69" r="7.4" fill="#FFFFFF"/><circle cx="92.6" cy="69.4" r="3.7" fill="#1B2440"/><circle cx="93.6" cy="67.8" r="1.3" fill="#FFFFFF"/><path d="M96 79Q100 81.5 103.5 77" fill="none" stroke="#1B2440" stroke-width="2.6" stroke-linecap="round"/></symbol>
+  <symbol id="wordmark" viewBox="0 18 206 116"><g fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M6 28V100M32 62L6 86M16 77L34 100"/><circle cx="70" cy="81" r="19"/><path d="M89 62V100"/><path d="M109 62V100M109 82C109 69 117 62 129 62"/><path d="M146 28V100"/><path d="M165 62L182 100M199 62L173 124"/></g></symbol>
+  <symbol id="car" viewBox="8 28 106 74"><path d="M15 80Q15 60 27 58L34 44Q38 34 49 34H66Q76 34 82 44L90 57Q105 59 107 72V80Q107 87 100 87H22Q15 87 15 80Z" fill="currentColor"/><path d="M40 56L44 46Q46 41 51 41H57V56Z" fill="#fff" opacity=".85"/><path d="M61 56V41H65Q70 41 73 46L79 56Z" fill="#fff" opacity=".85"/><circle cx="38" cy="87" r="11" fill="#20242E"/><circle cx="38" cy="87" r="4.4" fill="#C9CED8"/><circle cx="85" cy="87" r="11" fill="#20242E"/><circle cx="85" cy="87" r="4.4" fill="#C9CED8"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L3.5 19h17z"/><path d="M12 10v4M12 16.6v.2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4.5"/><path d="M11.5 11.5L20 3M16 7l3 3"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.6a2.5 2.5 0 114 2c-.9.6-1.6 1.1-1.6 2.2M12 16.8v.2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1-3.6 4-5.4 7.5-5.4s6.5 1.8 7.5 5.4"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="intro">
+    <h1>Karly · prototype du design system</h1>
+    <p>La base « Soleil » sur fond blanc : boutons jaunes en pilule, formes rondes, ombres douces. Le crème a disparu, et la mascotte se pose désormais sur sa tuile bleu nuit, comme dans le logo. Voitures et prix sont des exemples.</p>
+  </header>
+
+  <section class="sheet">
+    <h2>Trois écrans</h2>
+    <p>Les mêmes composants, assemblés : chercher, lire le prix, et l'écran vide qui posait problème.</p>
+    <div class="screens">
+      <figure>
+        <div class="phone">
+          <div class="body">
+            <div class="bar"><span class="logo"><span class="k-tile"><svg viewBox="0 0 112 78"><use href="#karly-roule"/></svg></span><svg viewBox="0 0 206 116" role="img" aria-label="karly"><use href="#wordmark"/></svg></span><span class="me" aria-label="Profil">NE</span></div>
+            <div class="k-search"><div><small>Où</small><b>Lausanne, gare</b></div><div><small>Quand</small><b>sam. 21 nov. 9 h → dim. 22 nov. 18 h</b></div></div>
+            <div class="scroll"><span class="k-chip on">Citadine</span><span class="k-chip">Compacte</span><span class="k-chip">Familiale</span><span class="k-chip">Utilitaire</span></div>
+            <h3 class="lead">12 voitures à proximité</h3>
+            <div class="list">
+              <div class="k-car"><div class="pic"><svg style="color:#E5484D"><use href="#car"/></svg></div><div class="mid"><h4>Fiat 500</h4><p>Flon · 350 m</p><span class="k-badge ok"><svg><use href="#i-bolt"/></svg>Instantanée</span></div><div class="price">CHF 184<small>au total</small></div></div>
+              <div class="k-car"><div class="pic"><svg style="color:#8E99AB"><use href="#car"/></svg></div><div class="mid"><h4>VW Golf</h4><p>Ouchy · 1,2 km</p><span class="k-badge warn"><svg><use href="#i-clock"/></svg>Sur demande</span></div><div class="price">CHF 212<small>au total</small></div></div>
+              <div class="k-car"><div class="pic"><svg style="color:#3E63DD"><use href="#car"/></svg></div><div class="mid"><h4>Renault Clio</h4><p>Renens · 3,4 km</p><span class="k-badge ok"><svg><use href="#i-bolt"/></svg>Instantanée</span></div><div class="price">CHF 196<small>au total</small></div></div>
+            </div>
+          </div>
+          <nav class="k-tabs" aria-label="Navigation"><span class="on"><i><svg><use href="#i-search"/></svg></i>Rechercher</span><span><i><svg><use href="#i-key"/></svg></i>Locations</span><span><i><svg><use href="#i-help"/></svg></i>Aide</span><span><i><svg><use href="#i-user"/></svg></i>Profil</span></nav>
+        </div>
+        <figcaption>Recherche</figcaption>
+      </figure>
+
+      <figure>
+        <div class="phone">
+          <div class="body">
+            <div class="bar"><button class="back" aria-label="Retour"><svg><use href="#i-back"/></svg></button></div>
+            <div class="hero"><svg style="color:#E5484D"><use href="#car"/></svg></div>
+            <h3 class="title">Fiat 500</h3>
+            <p class="where">Lausanne, Flon · à 350 m</p>
+            <div class="row"><span class="k-badge ok"><svg><use href="#i-bolt"/></svg>Réservation instantanée</span></div>
+            <div class="row"><span class="k-chip">4 places</span><span class="k-chip">Manuelle</span><span class="k-chip">Essence</span></div>
+            <div class="k-total">
+              <h4>Prix total, du sam. 21 au dim. 22 nov.</h4>
+              <dl>
+                <div><dt>2 jours à CHF 70.00</dt><dd>CHF 140.00</dd></div>
+                <div><dt>Assurance, 200 km inclus</dt><dd>CHF 28.00</dd></div>
+                <div><dt>Frais de service</dt><dd>CHF 16.00</dd></div>
+              </dl>
+              <div class="sum"><span>Total</span><strong>CHF 184.00</strong></div>
+              <p class="note">Caution de CHF 300.00 bloquée sur la carte, libérée le 24 nov.</p>
+              <button class="k-btn block">Réserver cette voiture</button>
+              <p class="fine">Rien n'est débité avant la confirmation.</p>
+            </div>
+          </div>
+        </div>
+        <figcaption>Fiche et prix total</figcaption>
+      </figure>
+
+      <figure>
+        <div class="phone">
+          <div class="body" style="display:flex;flex-direction:column">
+            <div class="bar"><h3>Locations</h3></div>
+            <div class="center">
+              <div class="k-empty"><span class="k-tile"><svg viewBox="0 0 108 92"><use href="#karly-face"/></svg></span><h4>Aucune location en cours</h4><p>La prochaine réservation s'affichera ici, avec l'heure et le lieu de prise en charge.</p><button class="k-btn">Chercher une voiture</button></div>
+            </div>
+          </div>
+          <nav class="k-tabs" aria-label="Navigation"><span><i><svg><use href="#i-search"/></svg></i>Rechercher</span><span class="on"><i><svg><use href="#i-key"/></svg></i>Locations</span><span><i><svg><use href="#i-help"/></svg></i>Aide</span><span><i><svg><use href="#i-user"/></svg></i>Profil</span></nav>
+        </div>
+        <figcaption>Écran vide</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <h2>Les règles du système</h2>
+    <p>Quatre règles suffisent à garder l'ensemble cohérent.</p>
+    <ul class="rules">
+      <li><b>Le jaune, c'est l'action.</b> Un seul bouton jaune par écran, plus l'onglet actif. Jamais de jaune décoratif.</li>
+      <li><b>Le bleu nuit, c'est la marque et le choix.</b> Texte, tuile de la mascotte, puce sélectionnée.</li>
+      <li><b>La mascotte vit sur sa tuile bleu nuit.</b> Elle n'est jamais posée seule sur du blanc ni à côté d'un aplat jaune.</li>
+      <li><b>Le bleu ciel, c'est l'image.</b> La teinte du pare-brise de la mascotte sert de fond aux visuels de voitures, pour que la page ne soit pas que blanche et grise.</li>
+    </ul>
+
+    <h3>Couleurs</h3>
+    <div class="swatches" id="swatches"></div>
+
+    <h3>Typographie</h3>
+    <div class="type">
+      <p class="t1">Une voiture pour ce week-end</p>
+      <p class="t2">Prise en charge samedi à 9 h</p>
+      <p class="t3">Le prix affiché avant de confirmer est le prix payé. L'assurance, les frais et la caution y figurent déjà.</p>
+      <p class="num">CHF 184.00</p>
+      <p class="t4">Gabarito pour les titres et les prix, Onest pour le texte. Chiffres à largeur fixe dans les prix.</p>
+    </div>
+
+    <h3>Formes</h3>
+    <div class="shapes">
+      <div><i style="width:104px;height:68px;border-radius:var(--radius-card)"></i>Carte · 24 px</div>
+      <div><i style="width:80px;height:56px;border-radius:var(--radius-inner)"></i>Visuel · 16 px</div>
+      <div><i style="width:112px;height:46px;border-radius:var(--radius-pill)"></i>Bouton, champ, puce · pilule</div>
+      <div><span class="k-tile" style="width:60px;height:60px;margin-bottom:10px"></span>Tuile mascotte</div>
+    </div>
+
+    <h3>Composants</h3>
+    <div class="row"><button class="k-btn">Réserver cette voiture</button><button class="k-btn sec">Voir les photos</button><button class="k-btn" disabled>Indisponible</button></div>
+    <div class="row"><label class="k-field"><span>Lieu de prise en charge</span><input value="Lausanne, gare" aria-label="Lieu de prise en charge"></label></div>
+    <div class="row"><span class="k-chip on">Citadine</span><span class="k-chip">Compacte</span><span class="k-chip">Familiale</span><span class="k-chip">Utilitaire</span></div>
+    <div class="row"><span class="k-badge ok"><svg><use href="#i-bolt"/></svg>Réservation instantanée</span><span class="k-badge warn"><svg><use href="#i-clock"/></svg>Réponse sous 24 h</span><span class="k-badge err"><svg><use href="#i-alert"/></svg>Permis à vérifier</span></div>
+  </section>
+</div>
+
+<script>
+const SW = [["--color-bg","Fond"],["--color-sunken","Fond en creux"],["--color-tint","Bleu ciel"],["--color-text","Texte, bleu nuit"],["--color-text-muted","Texte discret"],["--color-line","Filet"],["--color-action","Action, jaune"],["--color-ok","Confirmé"],["--color-warn","En attente"],["--color-err","Problème"]];
+const cs = getComputedStyle(document.documentElement), host = document.getElementById("swatches");
+for (const [v, label] of SW) {
+  const hex = cs.getPropertyValue(v).trim().toUpperCase(), d = document.createElement("div");
+  d.className = "sw"; d.innerHTML = `<i style="background:${hex}"></i><b></b><code></code>`;
+  d.querySelector("b").textContent = label; d.querySelector("code").textContent = hex; host.append(d);
+}
+</script>
+</body>
+</html>

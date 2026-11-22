@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "docs/design-system/prototype.html"
+        ],
+        "createdAt": "2026-11-22T15:54:30.316Z",
+        "reason": "Décidé par Claude : page de démonstration, les cartes sont imbriquées dans des cadres de téléphone factices posés sur une planche ; dans l'app réelle elles reposent directement sur le fond"
+      }
+    ]
+  }
+}
